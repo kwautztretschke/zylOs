@@ -4,20 +4,22 @@
 #include <stdint.h>
 
 class Program;
+class Framebuffer;
+class Pixel;
 
 namespace ProgramManager{
 
-void		add(Program *ptr);
-int			initPrograms();
-int			init();
+void			add(Program *ptr);
+int				initPrograms();
+int				init();
 
-void		render(long tick);
-int			focus(char* program);
-int			input(char* key, char* value);
+void			render(long tick);
+int				focus(char* program);
+int				input(char* key, char* value);
 
-void		setColor(uint8_t* c);
-uint8_t*	getColor();
-uint8_t*	getFB();
+void			setColor(Pixel c);
+Pixel			getColor();
+Framebuffer		getFB();
 
 } // namespace ProgramManager
 

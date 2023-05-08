@@ -9,9 +9,8 @@ namespace ProgramManager{
 static int			s_Count = 0;
 static Program*		s_pHead = NULL;
 static Program*		s_pActive = NULL;
-static uint8_t		s_Color[3] = {0}; // TODO array of colors
-static uint8_t		s_FB[3]= {0}; //TODO framebuffer
-
+static Pixel		s_Color(255, 0, 0);
+static Framebuffer	s_FB;
 
 void add(Program* ptr)
 {	//call this in the constructor of your programs to add them to a list of all programs
@@ -40,8 +39,7 @@ int initPrograms(){
 
 void render(long tick){
 	s_pActive->render(tick);
-	for (int i=0;i<3;i++)
-		s_FB[i] = s_pActive->m_FB[i];
+	s_FB = s_pActive->m_FB;
 }
 
 int focus(char* name){
@@ -65,16 +63,15 @@ int input(char* key, char* value){
 	return s_pActive->input(key, value);
 }
 
-void setColor(uint8_t* c){
-	for(int i=0;i<3;i++)
-		s_Color[i] = c[i];
+void setColor(Pixel c){
+	s_Color = c;
 }
 
-uint8_t* getColor() {
+Pixel getColor() {
 	return s_Color;
 }
 
-uint8_t* getFB() {
+Framebuffer getFB() {
 	return s_FB;
 }
 

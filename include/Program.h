@@ -2,11 +2,12 @@
 #define __PROGRAM_H__
 
 #include "ProgramManager.h"
+#include "Pixelbuffer.h"
 
 class Program{
 public: //TODO make some of these Private?
 	const char*				m_Name;
-	uint8_t					m_FB[3]; //TODO "Framebuffer"
+	Framebuffer				m_FB;
 	Program*				m_pNext = 0;
 	//* methods applicable for each Program
 	;						Program();
