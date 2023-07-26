@@ -16,6 +16,7 @@ public: //TODO make some of these Private?
 	virtual void          	activate(){}
 	virtual void          	render(long tick){}
 	virtual int				input(char* key, char* value){return 0;}
+	virtual void			artnet(const uint8_t* data, const uint16_t size){};
 };
 
 

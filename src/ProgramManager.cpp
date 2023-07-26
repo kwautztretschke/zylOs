@@ -70,6 +70,10 @@ int input(char* key, char* value){
 	return s_pActive->input(key, value);
 }
 
+void artnet(const uint8_t* data, const uint16_t size){
+	s_pActive->artnet(data, size);
+}
+
 void setColor(uint8_t* c){
 	for(int i=0;i<3;i++)
 		s_Color[i] = c[i];

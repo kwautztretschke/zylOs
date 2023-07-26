@@ -14,6 +14,7 @@ int			init();
 void		render(long tick);
 int			focus(char* program);
 int			input(char* key, char* value);
+void		artnet(const uint8_t* data, const uint16_t size);
 
 void		setColor(uint8_t* c);
 uint8_t*	getColor();
