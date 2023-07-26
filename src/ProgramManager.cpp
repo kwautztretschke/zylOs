@@ -27,6 +27,11 @@ int init(){
 }
 
 int initPrograms(){
+	if(!s_Count){
+		Serial.printf("No programs found! Critical Error!");
+		return -1;
+	}
+
 	Serial.printf("initializing %d programs\n", s_Count);
 	int error=0;
 	Program* ptr = s_pHead;
