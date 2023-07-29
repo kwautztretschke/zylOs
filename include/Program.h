@@ -3,10 +3,12 @@
 
 #include "ProgramManager.h"
 
+#define NUM_LEDS 115 //TODO bad
+
 class Program{
 public: //TODO make some of these Private?
 	const char*				m_Name;
-	uint8_t					m_FB[3]; //TODO "Framebuffer"
+	CRGB					m_FB[NUM_LEDS] = {0};
 	Program*				m_pNext = 0;
 	//* methods applicable for each Program
 	;						Program();
