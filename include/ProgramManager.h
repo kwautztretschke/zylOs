@@ -4,7 +4,9 @@
 #include <stdint.h>
 #include <FastLED.h>
 
-#define NUM_LEDS 115 //TODO bad
+#ifndef FB_SIZE
+	#define FB_SIZE 115 //TODO bad
+#endif
 
 class Program;
 

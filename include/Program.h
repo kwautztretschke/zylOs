@@ -3,12 +3,14 @@
 
 #include "ProgramManager.h"
 
-#define NUM_LEDS 115 //TODO bad
+#ifndef FB_SIZE
+	#define FB_SIZE 115 //TODO bad
+#endif
 
 class Program{
 public: //TODO make some of these Private?
 	const char*				m_Name;
-	CRGB					m_FB[NUM_LEDS] = {0};
+	CRGB					m_FB[FB_SIZE] = {0};
 	Program*				m_pNext = 0;
 	//* methods applicable for each Program
 	;						Program();

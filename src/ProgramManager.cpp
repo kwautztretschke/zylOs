@@ -10,7 +10,7 @@ static int			s_Count = 0;
 static Program*		s_pHead = NULL;
 static Program*		s_pActive = NULL;
 static CRGB			s_Color = CRGB::Green;
-static CRGB			s_FB[NUM_LEDS] = {0};
+static CRGB			s_FB[FB_SIZE] = {0};
 
 
 void add(Program* ptr)
@@ -45,7 +45,7 @@ int initPrograms(){
 
 void render(long tick){
 	s_pActive->render(tick);
-	for (int i=0;i<NUM_LEDS;i++)
+	for (int i=0;i<FB_SIZE;i++)
 		s_FB[i] = s_pActive->m_FB[i];
 }
 
