@@ -4,9 +4,7 @@
 #include <stdint.h>
 #include <FastLED.h>
 
-#ifndef FB_SIZE
-	#define FB_SIZE 115 //TODO bad
-#endif
+#include "ZylOsConfig.h"
 
 class Program;
 
@@ -21,7 +19,7 @@ int			focus(char* program);
 int			input(char* key, char* value);
 void		artnet(const uint8_t* data, const uint16_t size);
 
-void		setColor(CRGB c); //TODO consistency
+void		setColor(CRGB c);
 CRGB		getColor();
 CRGB*		getFB();
 

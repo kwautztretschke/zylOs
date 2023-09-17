@@ -3,11 +3,9 @@
 
 #include <FastLED.h>
 
+#include "ZylOsConfig.h"
 #include "ProgramManager.h"
 
-#ifndef FB_SIZE
-	#define FB_SIZE 115 //TODO bad
-#endif
 
 class Program{
 public: //TODO make some of these Private?

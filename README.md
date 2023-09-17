@@ -35,3 +35,14 @@ public:
 	}
 } myProgram;
 ```
+
+# Configuration
+You need to configure some parts depending on your setup.
+For this, you simply need to create a header file "ZylOsConfig.h" in a /config/ directory in your project root folder.
+(Note: for this to work, a certain folder structure is required. The library folder should be located at /*path/to/your/project*/lib/zylOs)
+
+An example configuration file can be found in zylOs/include/ZylOsConfig.h
+Just follow the instructions in the comments there.
+
+# Dependencies
+This library was built using platform.io, and as of now uses FastLED for the CRGB type. Expect that to change.
