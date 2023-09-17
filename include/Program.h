@@ -1,12 +1,18 @@
 #ifndef __PROGRAM_H__
 #define __PROGRAM_H__
 
+#include <FastLED.h>
+
 #include "ProgramManager.h"
+
+#ifndef FB_SIZE
+	#define FB_SIZE 115 //TODO bad
+#endif
 
 class Program{
 public: //TODO make some of these Private?
 	const char*				m_Name;
-	uint8_t					m_FB[3]; //TODO "Framebuffer"
+	CRGB					m_FB[FB_SIZE] = {0};
 	Program*				m_pNext = 0;
 	//* methods applicable for each Program
 	;						Program();

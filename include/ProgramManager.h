@@ -2,6 +2,11 @@
 #define __PROGRAMMANAGER_H__
 
 #include <stdint.h>
+#include <FastLED.h>
+
+#ifndef FB_SIZE
+	#define FB_SIZE 115 //TODO bad
+#endif
 
 class Program;
 
@@ -16,9 +21,9 @@ int			focus(char* program);
 int			input(char* key, char* value);
 void		artnet(const uint8_t* data, const uint16_t size);
 
-void		setColor(uint8_t* c);
-uint8_t*	getColor();
-uint8_t*	getFB();
+void		setColor(CRGB c); //TODO consistency
+CRGB		getColor();
+CRGB*		getFB();
 
 } // namespace ProgramManager
 
