@@ -74,8 +74,8 @@ void artnet(const uint8_t* data, const uint16_t size){
 	s_pActive->artnet(data, size);
 }
 
-void setColor(uint8_t* c){
-	s_Color = CRGB(c[0], c[1], c[2]);
+void setColor(CRGB c){
+	s_Color = c;
 }
 
 CRGB getColor() {

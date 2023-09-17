@@ -1,6 +1,8 @@
 #ifndef __PROGRAM_H__
 #define __PROGRAM_H__
 
+#include <FastLED.h>
+
 #include "ProgramManager.h"
 
 #ifndef FB_SIZE

@@ -21,7 +21,7 @@ int			focus(char* program);
 int			input(char* key, char* value);
 void		artnet(const uint8_t* data, const uint16_t size);
 
-void		setColor(uint8_t* c); //TODO consistency
+void		setColor(CRGB c); //TODO consistency
 CRGB		getColor();
 CRGB*		getFB();
 
