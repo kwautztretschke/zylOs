@@ -6,11 +6,11 @@
 
 namespace ProgramManager{
 	
-static int			s_Count = 0;
-static Program*		s_pHead = NULL;
-static Program*		s_pActive = NULL;
-static CRGB			s_Color = Z_DEFAULT_COLOR;
-static CRGB			s_FB[FB_SIZE] = {0};
+static int			s_Count 				= 0;
+static Program*		s_pHead 				= NULL;
+static Program*		s_pActive 				= NULL;
+static CRGB			s_Color[ZPM_COLORS] 	= {0};
+static CRGB			s_FB[FB_SIZE] 			= {0};
 
 
 void add(Program* ptr)
@@ -23,6 +23,7 @@ void add(Program* ptr)
 int init(){
 	Serial.println("Initializing Program Manager");
 	s_pActive = s_pHead;
+	s_Color[0] = Z_DEFAULT_COLOR;
 	#ifdef Z_DEFAULT_PROGRAM
 		focus(Z_DEFAULT_PROGRAM);
 	#endif
@@ -82,12 +83,12 @@ void artnet(const uint8_t* data, const uint16_t size){
 	s_pActive->artnet(data, size);
 }
 
-void setColor(CRGB c){
-	s_Color = c;
+void setColor(uint8_t index, CRGB c){
+	s_Color[index] = c;
 }
 
-CRGB getColor() {
-	return s_Color;
+CRGB getColor(uint8_t index) {
+	return s_Color[index];
 }
 
 CRGB* getFB() {

@@ -19,8 +19,8 @@ int			focus(char* program);
 int			input(char* key, char* value);
 void		artnet(const uint8_t* data, const uint16_t size);
 
-void		setColor(CRGB c);
-CRGB		getColor();
+void		setColor(uint8_t index, CRGB c);
+CRGB		getColor(uint8_t index);
 CRGB*		getFB();
 
 } // namespace ProgramManager

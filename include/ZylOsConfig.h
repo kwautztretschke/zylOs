@@ -29,10 +29,13 @@
 // if not, just delete this line.
 
 // do you have a favorite color? (Green is not a creative color)
-#define Z_DEFAULT_COLOR CRGB::Green
+//#define Z_DEFAULT_COLOR CRGB::Green
 
 // how about a favorite program? uncomment this and it will be the first to run.
 //#define Z_DEFAULT_PROGRAM "Rainbow"
+
+// how many colors do you think the program manager should save? If you don't care, just uncomment.
+//#define ZPM_COLORS 8
 
 #endif // __ZYLOSCONFIG_H__
 
@@ -47,6 +50,10 @@
 // why are you still reading this
 //
 // **********************************************************
+
+#ifndef Z_DEVICE_NAME
+	#error "You gotta give your device a name!"
+#endif
 
 #ifdef Z_MONOCHROME
 	#ifdef Z_LED_TYPE
@@ -75,5 +82,8 @@
 	#define Z_DEFAULT_COLOR CRGB::Green
 #endif
 
+#ifndef ZPM_COLORS
+	#define ZPM_COLORS 8
+#endif
 
 #endif // __ZYLOSCONFIG_META_H__
