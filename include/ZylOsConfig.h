@@ -17,6 +17,9 @@
 #ifndef __ZYLOSCONFIG_H__  //dont touch that
 #define __ZYLOSCONFIG_H__
 
+// what's the name of your device?
+#define Z_DEVICE_NAME "tollerESP"
+
 // the basics first, what kind of LED strip are you using?
 //#define Z_MONOCHROME
 #define Z_WS2812B
