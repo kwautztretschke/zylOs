@@ -28,7 +28,7 @@ public:
 	virtual int 			init(){return 0;}
 	virtual void          	activate(){}
 	virtual void          	render(long tick){}
-	virtual int				input(char* key, char* value){return 0;}
+	virtual int				input(char* key, char* value);
 	virtual void			artnet(const uint8_t* data, const uint16_t size){};
 };
 
@@ -46,10 +46,6 @@ protected:
 						// modulated by the artnet history (with smoothing)
 	CRGB					getModulatedColor();
 	CRGB					getModulatedColorRelative(int index);
-						// gets called after the regular input function, for your own needs
-	virtual int				inputFurther(char* key, char* value){return 0;} 
-						// gets called after the regular artnet function, for your own needs
-	virtual void			artnetFurther(const uint8_t* data, const uint16_t size){};
 public:
 	using Program::Program;
 						// handles channel and threshold, if that's all you need

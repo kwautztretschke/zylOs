@@ -12,6 +12,13 @@ Program::Program(bool add)
 		ProgramManager::add(this);
 }
 
+int Program::input(char* key, char* value)
+{	// handles color, if that's all you need
+	if(!strcmp(key, "colorindex"))
+		m_ColorIndex = strtol(value, NULL, 10);
+	return 0;
+}
+
 CRGB Program::getColor()
 {	// returns the color at the current index
 	return ProgramManager::getColor(m_ColorIndex);
@@ -30,13 +37,14 @@ CRGB Program::getColorRelative(int index)
 
 int ArtnetProgram::input(char* key, char* value)
 {	// handles channel and threshold, if that's all you need
+	Program::input(key, value);
 	if(!strcmp(key, "channel"))
 		m_Channel = strtol(value, NULL, 10);
 	else if(!strcmp(key, "threshold"))	
 		m_Threshold = strtol(value, NULL, 10);
 	else if(!strcmp(key, "smooth"))	
 		m_Smooth = strtol(value, NULL, 10);
-	return inputFurther(key, value);
+	return 0;
 }
 
 void ArtnetProgram::artnet(const uint8_t* data, const uint16_t size)
@@ -46,7 +54,6 @@ void ArtnetProgram::artnet(const uint8_t* data, const uint16_t size)
 	if (m_ArtNetHistoryIndex-- < 0)
 		m_ArtNetHistoryIndex = m_ArtNetHistorySize - 1;
 	m_pArtNetHistory[m_ArtNetHistoryIndex] = data[m_Channel];
-	artnetFurther(data, size);
 }
 
 uint8_t ArtnetProgram::getArtNetHistory(int index)
