@@ -88,6 +88,8 @@ void setColor(uint8_t index, CRGB c){
 }
 
 CRGB getColor(uint8_t index) {
+	if (index >= ZPM_COLORS)
+		index = index % ZPM_COLORS;
 	return s_Color[index];
 }
 
