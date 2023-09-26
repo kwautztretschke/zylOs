@@ -38,12 +38,19 @@ CRGB Program::getColorRelative(int index)
 int ArtnetProgram::input(char* key, char* value)
 {	// handles channel and threshold, if that's all you need
 	Program::input(key, value);
-	if(!strcmp(key, "channel"))
-		m_Channel = strtol(value, NULL, 10);
-	else if(!strcmp(key, "threshold"))	
-		m_Threshold = strtol(value, NULL, 10);
-	else if(!strcmp(key, "smooth"))	
-		m_Smooth = strtol(value, NULL, 10);
+	if(!strcmp(key, "channel")){
+		int channel = strtol(value, NULL, 10);
+		if (0 <= channel && channel < 512)
+			m_Channel = strtol(value, NULL, 10);
+	}else if(!strcmp(key, "threshold")){
+		int threshold = strtol(value, NULL, 10);
+		if (0 <= threshold && threshold <= 255)
+			m_Threshold = strtol(value, NULL, 10);
+	}else if(!strcmp(key, "smooth")){
+		int smooth = strtol(value, NULL, 10);
+		if (0 <= smooth && smooth <= m_ArtNetHistorySize)
+			m_Smooth = strtol(value, NULL, 10);
+	}
 	return 0;
 }
 
@@ -51,7 +58,7 @@ void ArtnetProgram::artnet(const uint8_t* data, const uint16_t size)
 {	// puts the selected channel into the history
 	if(m_Channel >= size)
 		return;
-	if (m_ArtNetHistoryIndex-- < 0)
+	if (--m_ArtNetHistoryIndex < 0)
 		m_ArtNetHistoryIndex = m_ArtNetHistorySize - 1;
 	m_pArtNetHistory[m_ArtNetHistoryIndex] = data[m_Channel];
 }
@@ -59,28 +66,24 @@ void ArtnetProgram::artnet(const uint8_t* data, const uint16_t size)
 uint8_t ArtnetProgram::getArtNetHistory(int index)
 {	
 	if (index < 0)
-	return 0;
-	
+		return 0;
 	index = (m_ArtNetHistoryIndex + index) % m_ArtNetHistorySize;
 	return m_pArtNetHistory[index];
 }
 
-CRGB ArtnetProgram::getModulatedColor()
-{	// returns the color at the current index, 
-	// modulated by the artnet history (with smoothing)
-	return getModulatedColorRelative(0);
-}
-
-CRGB ArtnetProgram::getModulatedColorRelative(int index)
-{	// returns the color relative to the current index, 
-	// modulated by the artnet history (with smoothing)
-	CRGB c = getColorRelative(index);
-	if (m_Smooth == 0)
-		return c.nscale8(getArtNetHistory(0));
-
+uint8_t ArtnetProgram::getModulator()
+{	
+	if (m_Smooth == 0){
+		uint8_t scalar = getArtNetHistory(0);
+		if (scalar < m_Threshold)
+			scalar = m_Threshold;
+		return scalar;
+	}
 	int sum = 0;
 	for (int i = 0; i < m_Smooth; i++)
 		sum += getArtNetHistory(i);
 	sum /= m_Smooth;
-	return c.nscale8(sum);
+	if (sum < m_Threshold)
+		sum = m_Threshold;
+	return (uint8_t)sum;
 }

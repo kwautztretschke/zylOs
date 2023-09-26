@@ -6,8 +6,6 @@
 #include "ZylOsConfig.h"
 #include "ProgramManager.h"
 
-#define ARTNET_HISTORY_SIZE 256
-
 
 class Program{
 protected:
@@ -35,17 +33,15 @@ public:
 class ArtnetProgram : public Program{
 protected:
 	int 					m_Channel = 0;
-	int 					m_Threshold = 0;
+	uint8_t					m_Threshold = 0;
 	int 					m_Smooth = 0;
 	char* 					m_pArtNetHistory = nullptr;
 	int 					m_ArtNetHistorySize = 0;
 	int						m_ArtNetHistoryIndex = 0;
 	//* artnet utility functions
 	uint8_t					getArtNetHistory(int index);
-						// returns the color at the current index, 
-						// modulated by the artnet history (with smoothing)
-	CRGB					getModulatedColor();
-	CRGB					getModulatedColorRelative(int index);
+						// returns a more usable value to scale stuff with
+	uint8_t					getModulator();
 public:
 	using Program::Program;
 						// handles channel and threshold, if that's all you need
