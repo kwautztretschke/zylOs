@@ -35,27 +35,51 @@ CRGB Program::getColorRelative(int index)
 	return ProgramManager::getColor((index+m_ColorIndex)%ZPM_COLORS);
 }
 
-int ArtnetProgram::input(char* key, char* value)
-{	// handles channel and threshold, if that's all you need
-	Program::input(key, value);
+
+ArtnetHelper::ArtnetHelper(uint8_t *pArtNetHistory, int artNetHistorySize, const char* suffix)
+{	// automatically add new Program to linked list
+	m_pArtNetHistory = pArtNetHistory;
+	m_ArtNetHistorySize = artNetHistorySize;
+	m_ArtNetHistoryIndex = m_ArtNetHistorySize - 1;
+	m_pSuffix = suffix;
+}
+
+int ArtnetHelper::input(char* key, char* value)
+{	
+	// Check if the key ends with the suffix (if we have one)
+	if (m_pSuffix != nullptr){
+		if((strlen(key) > strlen(m_pSuffix) &&					// is the input long enough to contain a suffix?
+				key[strlen(key) - strlen(m_pSuffix) - 1] == '/' &&	// does the input contain a '/' before the suffix?
+				strcmp(key + strlen(key) - strlen(m_pSuffix), m_pSuffix) == 0)) { // does the suffix match?
+			// remove suffix from key
+			key[strlen(key) - strlen(m_pSuffix) - 1] = '\0';
+		} else {
+			return 2; // no suffix match
+		}
+	}
 	if(!strcmp(key, "channel")){
 		int channel = strtol(value, NULL, 10);
 		if (0 <= channel && channel < 512)
 			m_Channel = strtol(value, NULL, 10);
-	}else if(!strcmp(key, "threshold")){
+		return 0;
+	}
+	if(!strcmp(key, "threshold")){
 		int threshold = strtol(value, NULL, 10);
 		if (0 <= threshold && threshold <= 255)
 			m_Threshold = strtol(value, NULL, 10);
-	}else if(!strcmp(key, "smooth")){
+		return 0;
+	}
+	if(!strcmp(key, "smooth")){
 		int smooth = strtol(value, NULL, 10);
 		if (0 <= smooth && smooth <= m_ArtNetHistorySize)
 			m_Smooth = strtol(value, NULL, 10);
+		return 0;
 	}
-	return 0;
+	return 1; //not found
 }
 
-void ArtnetProgram::artnet(const uint8_t* data, const uint16_t size)
-{	// puts the selected channel into the history
+void ArtnetHelper::artnet(const uint8_t* data, const uint16_t size)
+{	
 	if(m_Channel >= size)
 		return;
 	if (--m_ArtNetHistoryIndex < 0)
@@ -63,7 +87,7 @@ void ArtnetProgram::artnet(const uint8_t* data, const uint16_t size)
 	m_pArtNetHistory[m_ArtNetHistoryIndex] = data[m_Channel];
 }
 
-uint8_t ArtnetProgram::getArtNetHistory(int index)
+uint8_t ArtnetHelper::getArtNetHistory(int index)
 {	
 	if (index < 0)
 		return 0;
@@ -71,7 +95,7 @@ uint8_t ArtnetProgram::getArtNetHistory(int index)
 	return m_pArtNetHistory[index];
 }
 
-uint8_t ArtnetProgram::getModulator()
+uint8_t ArtnetHelper::getModulator()
 {	
 	if (m_Smooth == 0){
 		uint8_t scalar = getArtNetHistory(0);
