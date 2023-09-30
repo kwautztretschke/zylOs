@@ -14,9 +14,11 @@ Program::Program(bool add)
 
 int Program::input(char* key, char* value)
 {	// handles color, if that's all you need
-	if(!strcmp(key, "colorindex"))
+	if(!strcmp(key, "colorindex")){
 		m_ColorIndex = strtol(value, NULL, 10);
-	return 0;
+		return 0;
+	}
+	return 1;
 }
 
 CRGB Program::getColor()
