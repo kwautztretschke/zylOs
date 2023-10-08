@@ -97,6 +97,11 @@ uint8_t ArtnetHelper::getArtNetHistory(int index)
 	return m_pArtNetHistory[index];
 }
 
+void ArtnetHelper::clearArtNetHistory()
+{	
+	memset(m_pArtNetHistory, 0, m_ArtNetHistorySize);
+}
+
 uint8_t ArtnetHelper::getModulator()
 {	
 	if (m_Smooth == 0){

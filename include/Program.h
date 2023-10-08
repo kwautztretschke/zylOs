@@ -44,6 +44,8 @@ public:
 	;					ArtnetHelper(uint8_t* pArtNetHistory, int artNetHistorySize) : ArtnetHelper(pArtNetHistory, artNetHistorySize, nullptr){};
 						// returns the raw value, <index> steps back in time
 	uint8_t				getArtNetHistory(int index);
+						// clears the history
+	void				clearArtNetHistory();
 						// returns a more usable value to scale stuff with
 	uint8_t				getModulator();
 						// handles input if suffix matches (e.g. "channel/l", "128")
