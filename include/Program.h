@@ -19,7 +19,7 @@ public:
 	//* necessary stuff for the program manager
 	const char*			m_Name;
 	#ifdef Z_ZYLINDER
-		CRGB				m_FB[X_RES][Y_RES] = {0};
+		CRGB				m_FB[X_RES][Y_RES] = {};
 	#else
 		CRGB				m_FB[FB_SIZE] = {0};
 	#endif
