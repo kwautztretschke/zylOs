@@ -73,6 +73,19 @@
 		#error "You need to define FB_SIZE when using Z_WS2812B!"
 	#endif
 #endif
+#ifdef Z_ZYLINDER
+	#ifdef Z_LED_TYPE
+		#error "You can't use multiple LED types at once!"
+	#endif
+	#define Z_LED_TYPE
+	#ifndef X_RES
+		#error "X_RES definition missing!"
+	#endif
+	#ifndef Y_RES
+		#error "Y_RES definition missing!"
+	#endif
+	#define FB_SIZE (X_RES*Y_RES)
+#endif
 
 #ifndef Z_LED_TYPE
 	#error "You need to define either Z_MONOCHROME or Z_WS2812B!"

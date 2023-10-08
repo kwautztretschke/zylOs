@@ -10,7 +10,11 @@ static int			s_Count 				= 0;
 static Program*		s_pHead 				= NULL;
 static Program*		s_pActive 				= NULL;
 static CRGB			s_Color[ZPM_COLORS] 	= {0};
-static CRGB			s_FB[FB_SIZE] 			= {0};
+#ifdef Z_ZYLINDER
+	static CRGB			s_FB[X_RES][Y_RES] 		= {0};
+#else
+	static CRGB			s_FB[FB_SIZE] 			= {0};
+#endif
 
 
 void add(Program* ptr)
@@ -56,6 +60,11 @@ void render(long tick){
 	#ifdef Z_MONOCHROME
 		s_FB[0] = s_pActive->m_FB[0];
 	#endif
+	#ifdef Z_ZYLINDER
+		for (int x=0; x<X_RES; x++)
+			for (int y=0; y<Y_RES; y++)
+				s_FB[x][y] = s_pActive->m_FB[x][y];
+	#endif
 }
 
 int focus(char* name){
@@ -93,8 +102,14 @@ CRGB getColor(uint8_t index) {
 	return s_Color[index];
 }
 
-CRGB* getFB() {
-	return s_FB;
-}
+#ifdef Z_ZYLINDER
+	CRGB (*getFB())[Y_RES] {
+		return s_FB;
+	}
+#else
+	CRGB* getFB() {
+		return s_FB;
+	}
+#endif
 
 } // namespace ProgramManager

@@ -18,7 +18,11 @@ protected:
 public: 
 	//* necessary stuff for the program manager
 	const char*			m_Name;
-	CRGB				m_FB[FB_SIZE] = {0};
+	#ifdef Z_ZYLINDER
+		CRGB				m_FB[X_RES][Y_RES] = {0};
+	#else
+		CRGB				m_FB[FB_SIZE] = {0};
+	#endif
 	Program*			m_pNext = 0;
 	;					Program();
 	;					Program(bool add);

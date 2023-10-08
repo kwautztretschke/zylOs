@@ -21,7 +21,12 @@ void		artnet(const uint8_t* data, const uint16_t size);
 
 void		setColor(uint8_t index, CRGB c);
 CRGB		getColor(uint8_t index);
-CRGB*		getFB();
+#ifdef Z_ZYLINDER
+	// don't ask me what the fuck this syntax is
+	CRGB		(*getFB())[Y_RES];
+#else
+	CRGB*		getFB();
+#endif
 
 } // namespace ProgramManager
 
